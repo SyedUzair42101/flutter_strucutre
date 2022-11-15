@@ -2,8 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:practice/widgets/custom_buttom.dart';
 import 'package:practice/widgets/input_decoration.dart';
 
-class SigninScreen extends StatelessWidget {
+class SigninScreen extends StatefulWidget {
   const SigninScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SigninScreen> createState() => _SigninScreenState();
+}
+
+class _SigninScreenState extends State<SigninScreen> {
+  final _formKey = GlobalKey<FormState>();
+  bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,23 +30,53 @@ class SigninScreen extends StatelessWidget {
   //widget for body
   _buildBody() {
     return Container(
-        child: Column(
-      children: [
-        //signin text
-        Text('Signin Screen'),
-        //email textfield
-        TextField(
-          decoration: UIConfig().inputDecoration('your email', 'email'),
-        ),
-        //password textfield
-        TextField(
-          decoration: UIConfig().inputDecoration('your Password', 'Password'),
-        ),
-        //signin button
-        CustomButton(
-          buttonText: "signin",
-        ),
-      ],
+        child: Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          //signin text
+          Text('Signin Screen'),
+          //email textfield
+          TextFormField(
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'Please enter email';
+              }
+              return null;
+            },
+            decoration: UIConfig().inputDecoration(
+                'your email', 'email', Icons.email, null, null),
+          ),
+          //password textfield
+          TextFormField(
+            obscureText: _obscureText,
+            validator: (value) {
+              if (value == null || value.isEmpty || value.length < 4) {
+                return 'Please enter Strong password';
+              }
+              return null;
+            },
+            decoration: UIConfig().inputDecoration('your Password', 'Password',
+                Icons.lock, Icons.visibility, tooglePasstord),
+          ),
+          //signin button
+          InkWell(
+            onTap: () {
+              if (_formKey.currentState!.validate()) {
+                print('validated');
+              }
+            },
+            child: CustomButton(
+              buttonText: "signin",
+            ),
+          ),
+        ],
+      ),
     ));
+  }
+
+  void tooglePasstord() {
+    _obscureText = !_obscureText;
+    setState(() {});
   }
 }
