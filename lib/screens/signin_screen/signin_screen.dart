@@ -15,7 +15,7 @@ class SigninScreen extends StatelessWidget {
   //widget for appbar
   _buildAppbar() {
     return AppBar(
-      title: Text('Signin Screen'),
+      title: Text('Signing Screen'),
     );
   }
 
@@ -24,19 +24,19 @@ class SigninScreen extends StatelessWidget {
     return Container(
         child: Column(
       children: [
-        //signin text
-        Text('Signin Screen'),
-        //email textfield
+        //signing text
+        Text('Signing Screen'),
+        //email text-field
         TextField(
           decoration: UIConfig().inputDecoration('your email', 'email'),
         ),
-        //password textfield
+        //password text-field
         TextField(
           decoration: UIConfig().inputDecoration('your Password', 'Password'),
         ),
-        //signin button
+        //signing button
         CustomButton(
-          buttonText: "signin",
+          buttonText: "signing",
         ),
       ],
     ));
