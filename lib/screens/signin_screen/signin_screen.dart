@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:practice/screens/sliver_appbar/sliver_appbar.dart';
 import 'package:practice/widgets/custom_buttom.dart';
 import 'package:practice/widgets/input_decoration.dart';
+import 'package:practice/widgets/signin_popup.dart';
 
 class SigninScreen extends StatefulWidget {
   const SigninScreen({Key? key}) : super(key: key);
@@ -68,6 +70,20 @@ class _SigninScreenState extends State<SigninScreen> {
             },
             child: CustomButton(
               buttonText: "signin",
+              onPressed: () {
+                showSigninPopup(
+                  context,
+                  'Signin',
+                  'Are you sure to signin',
+                  () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SliverAppbar()));
+                  },
+                  () {
+                    Navigator.of(context).pop();
+                  },
+                );
+              },
             ),
           ),
         ],
