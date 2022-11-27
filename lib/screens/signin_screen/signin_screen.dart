@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:practice/models/user_profile_model.dart';
+import 'package:practice/screens/homescreen/homescreen.dart';
 import 'package:practice/screens/sliver_appbar/sliver_appbar.dart';
+import 'package:practice/services/http_services/http_services.dart';
 import 'package:practice/widgets/custom_buttom.dart';
 import 'package:practice/widgets/input_decoration.dart';
 import 'package:practice/widgets/signin_popup.dart';
@@ -12,6 +15,10 @@ class SigninScreen extends StatefulWidget {
 }
 
 class _SigninScreenState extends State<SigninScreen> {
+  TextEditingController _emailController = TextEditingController();
+  UserProfileModel? authCustomerUser = UserProfileModel();
+  TextEditingController _passwordController = TextEditingController();
+  AuthenticationService _authenticationService = AuthenticationService();
   final _formKey = GlobalKey<FormState>();
   bool _obscureText = true;
   @override
@@ -40,6 +47,7 @@ class _SigninScreenState extends State<SigninScreen> {
           Text('Signin Screen'),
           //email textfield
           TextFormField(
+            controller: _emailController,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'Please enter email';
@@ -51,6 +59,7 @@ class _SigninScreenState extends State<SigninScreen> {
           ),
           //password textfield
           TextFormField(
+            controller: _passwordController,
             obscureText: _obscureText,
             validator: (value) {
               if (value == null || value.isEmpty || value.length < 4) {
@@ -62,29 +71,14 @@ class _SigninScreenState extends State<SigninScreen> {
                 Icons.lock, Icons.visibility, tooglePasstord),
           ),
           //signin button
-          InkWell(
-            onTap: () {
-              if (_formKey.currentState!.validate()) {
-                print('validated');
-              }
+          CustomButton(
+            buttonText: "signin",
+            onPressed: () async {
+              authCustomerUser = await _authenticationService.Login(
+                  _emailController.text,
+                  _passwordController.text,
+                  context); //get token
             },
-            child: CustomButton(
-              buttonText: "signin",
-              onPressed: () {
-                showSigninPopup(
-                  context,
-                  'Signin',
-                  'Are you sure to signin',
-                  () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => SliverAppbar()));
-                  },
-                  () {
-                    Navigator.of(context).pop();
-                  },
-                );
-              },
-            ),
           ),
         ],
       ),

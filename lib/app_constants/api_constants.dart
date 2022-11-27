@@ -1,3 +1,4 @@
 class APIConstants {
-  static const String BASE_URL = "https://www.abc.com";
+  static const String API_BASE_URL =
+      "https://noorulhudatrading.com/hps_vr_admin/api";
 }
