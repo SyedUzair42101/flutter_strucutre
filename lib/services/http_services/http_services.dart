@@ -64,4 +64,19 @@ class AuthenticationService with ChangeNotifier {
       CustomSnackBar.buildSuccessSnackbar(context, "USER NOT FOUND");
     }
   }
+
+  // Post Register Credential to API
+  Future Register(name, email, password, confirm_password, phone,
+      BuildContext context) async {
+    http.Response response = await _post(
+        "/register?name=$name&email=$email&password=$password&confirm_password=$confirm_password&phone=$phone",
+        _getRequestHeaders(), {});
+    // Response code
+    if (response.statusCode == 200) {
+      var jsonList = json.decode(response.body);
+      print(jsonList);
+    } else {
+      throw Exception('Failed to post logout credentials');
+    }
+  }
 }

@@ -18,6 +18,9 @@ class _SigninScreenState extends State<SigninScreen> {
   TextEditingController _emailController = TextEditingController();
   UserProfileModel? authCustomerUser = UserProfileModel();
   TextEditingController _passwordController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
+
   AuthenticationService _authenticationService = AuthenticationService();
   final _formKey = GlobalKey<FormState>();
   bool _obscureText = true;
@@ -45,6 +48,12 @@ class _SigninScreenState extends State<SigninScreen> {
         children: [
           //signin text
           Text('Signin Screen'),
+          //name textfield
+          TextFormField(
+            controller: _nameController,
+            decoration: UIConfig().inputDecoration(
+                'Enter Name', 'Name', Icons.person, null, null),
+          ),
           //email textfield
           TextFormField(
             controller: _emailController,
@@ -69,6 +78,11 @@ class _SigninScreenState extends State<SigninScreen> {
             },
             decoration: UIConfig().inputDecoration('your Password', 'Password',
                 Icons.lock, Icons.visibility, tooglePasstord),
+          ),
+          //phone textfield
+          TextFormField(
+            decoration: UIConfig().inputDecoration(
+                'your phone', 'phone', Icons.phone, null, null),
           ),
           //signin button
           CustomButton(
