@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:practice/app_constants/api_constants.dart';
-import 'package:practice/screens/homescreen/homescreen.dart';
 import 'package:practice/widgets/custom_snackbar.dart';
 
 class AuthenticationService with ChangeNotifier {
@@ -66,7 +65,8 @@ class AuthenticationService with ChangeNotifier {
   }
 
   // Post Register Credential to API
-  Future Register(name, email, password, confirm_password, phone,
+  // Post Signup Credential to API
+  Future Signup(name, email, password, confirm_password, phone,
       BuildContext context) async {
     http.Response response = await _post(
         "/register?name=$name&email=$email&password=$password&confirm_password=$confirm_password&phone=$phone",
@@ -74,6 +74,8 @@ class AuthenticationService with ChangeNotifier {
     // Response code
     if (response.statusCode == 200) {
       var jsonList = json.decode(response.body);
+      //navigate to Account sucessful if user register successfully
+
       print(jsonList);
     } else {
       throw Exception('Failed to post logout credentials');

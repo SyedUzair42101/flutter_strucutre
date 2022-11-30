@@ -15,14 +15,15 @@ class SigninScreen extends StatefulWidget {
 }
 
 class _SigninScreenState extends State<SigninScreen> {
-  TextEditingController _emailController = TextEditingController();
   UserProfileModel? authCustomerUser = UserProfileModel();
+
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _nameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
 
   AuthenticationService _authenticationService = AuthenticationService();
-  final _formKey = GlobalKey<FormState>();
+
   bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
@@ -42,60 +43,49 @@ class _SigninScreenState extends State<SigninScreen> {
   //widget for body
   _buildBody() {
     return Container(
-        child: Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          //signin text
-          Text('Signin Screen'),
-          //name textfield
-          TextFormField(
-            controller: _nameController,
-            decoration: UIConfig().inputDecoration(
-                'Enter Name', 'Name', Icons.person, null, null),
-          ),
-          //email textfield
-          TextFormField(
-            controller: _emailController,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Please enter email';
-              }
-              return null;
-            },
-            decoration: UIConfig().inputDecoration(
-                'your email', 'email', Icons.email, null, null),
-          ),
-          //password textfield
-          TextFormField(
-            controller: _passwordController,
-            obscureText: _obscureText,
-            validator: (value) {
-              if (value == null || value.isEmpty || value.length < 4) {
-                return 'Please enter Strong password';
-              }
-              return null;
-            },
-            decoration: UIConfig().inputDecoration('your Password', 'Password',
-                Icons.lock, Icons.visibility, tooglePasstord),
-          ),
-          //phone textfield
-          TextFormField(
-            decoration: UIConfig().inputDecoration(
-                'your phone', 'phone', Icons.phone, null, null),
-          ),
-          //signin button
-          CustomButton(
-            buttonText: "signin",
-            onPressed: () async {
-              authCustomerUser = await _authenticationService.Login(
-                  _emailController.text,
-                  _passwordController.text,
-                  context); //get token
-            },
-          ),
-        ],
-      ),
+        child: Column(
+      children: [
+        //signin text
+        Text('Signin Screen'),
+        //name textfield
+        TextFormField(
+          controller: _nameController,
+          decoration: UIConfig()
+              .inputDecoration('Enter Name', 'Name', Icons.person, null, null),
+        ),
+        //email textfield
+        TextFormField(
+          controller: _emailController,
+          decoration: UIConfig()
+              .inputDecoration('your email', 'email', Icons.email, null, null),
+        ),
+        //password textfield
+        TextFormField(
+          controller: _passwordController,
+          obscureText: _obscureText,
+          decoration: UIConfig().inputDecoration('your Password', 'Password',
+              Icons.lock, Icons.visibility, tooglePasstord),
+        ),
+        //phone textfield
+        TextFormField(
+          controller: _phoneController,
+          decoration: UIConfig()
+              .inputDecoration('your phone', 'phone', Icons.phone, null, null),
+        ),
+        //signin button
+        CustomButton(
+          buttonText: "SIGNUP",
+          onPressed: () async {
+            _authenticationService.Signup(
+                _nameController.text,
+                _emailController.text,
+                _passwordController.text,
+                _passwordController.text,
+                _phoneController.text,
+                context); //get token
+          },
+        ),
+      ],
     ));
   }
 
