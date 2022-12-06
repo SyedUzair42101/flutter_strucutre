@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:practice/app_constants/api_constants.dart';
-import 'package:practice/widgets/custom_snackbar.dart';
+import 'package:practice/models/user_profile_model.dart';
+import 'package:practice/screens/profile_view/user_profile.dart';
 
 class AuthenticationService with ChangeNotifier {
   String _authToken = "";
@@ -59,12 +59,15 @@ class AuthenticationService with ChangeNotifier {
       var jsonList = json.decode(response.body);
       print(jsonList);
       _authToken = jsonList['data']['token'];
+      _authToken = (await getToken()).toString();
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => USerProfile(),
+      ));
     } else {
-      CustomSnackBar.buildSuccessSnackbar(context, "USER NOT FOUND");
+      throw Exception('Failed to post login credentials');
     }
   }
 
-  // Post Register Credential to API
   // Post Signup Credential to API
   Future Signup(name, email, password, confirm_password, phone,
       BuildContext context) async {
@@ -74,11 +77,64 @@ class AuthenticationService with ChangeNotifier {
     // Response code
     if (response.statusCode == 200) {
       var jsonList = json.decode(response.body);
-      //navigate to Account sucessful if user register successfully
-
       print(jsonList);
     } else {
-      throw Exception('Failed to post logout credentials');
+      throw Exception('User Already register');
     }
   }
+
+  // get Logout Credential from API
+  Future Logout(BuildContext context) async {
+    http.Response response = await _get("/logout", _getRequestHeaders());
+    if (response.statusCode == 200) {
+      var jsonList = json.decode(response.body);
+      print(jsonList);
+    } else {
+      throw Exception('Failed to logout');
+    }
+  }
+
+  Future<UserProfileModel> getProfile() async {
+    http.Response response = await _get("/profile", _getRequestHeaders());
+    // Response code
+    if (response.statusCode == 200) {
+      var jsonList = json.decode(response.body);
+      print(jsonList);
+      //var details = userprofilemodel.fromJson(jsonList);
+      //  print(details);
+      //  return details;
+      return UserProfileModel.fromJson(jsonList);
+    } else {
+      throw Exception('Failed to logout');
+    }
+  }
+
+  // Post profile updates to API
+  Future profileUpdate(
+    name,
+    phone,
+    image,
+  ) async {
+    http.Response response = await _post(
+        "/profileUpdate?name=$name&phone=$phone&image=$image",
+        _getRequestHeaders(), {});
+    // Response code
+    if (response.statusCode == 200) {
+      var jsonList = json.decode(response.body);
+      print(jsonList);
+    } else {
+      throw Exception('Failed to load asma husna');
+    }
+  }
+}
+
+class AuthException implements Exception {
+  static const cancelled = AuthException('No account');
+
+  const AuthException(this.message);
+
+  final String message;
+
+  @override
+  String toString() => message;
 }

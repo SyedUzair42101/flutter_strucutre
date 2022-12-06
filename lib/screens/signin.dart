@@ -4,19 +4,17 @@ import 'package:practice/services/http_services/http_services.dart';
 import 'package:practice/widgets/custom_buttom.dart';
 import 'package:practice/widgets/input_decoration.dart';
 
-class SignoutScreen extends StatefulWidget {
-  const SignoutScreen({Key? key}) : super(key: key);
+class SigninScreen extends StatefulWidget {
+  const SigninScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignoutScreen> createState() => _SignoutScreenState();
+  State<SigninScreen> createState() => _SigninScreenState();
 }
 
-class _SignoutScreenState extends State<SignoutScreen> {
+class _SigninScreenState extends State<SigninScreen> {
   UserProfileModel? authCustomerUser = UserProfileModel();
 
   late TextEditingController _passwordController = TextEditingController();
-  late TextEditingController _phoneController = TextEditingController();
-  late TextEditingController _nameController = TextEditingController();
   late TextEditingController _emailController = TextEditingController();
 
   bool _obscureText = true;
@@ -31,7 +29,7 @@ class _SignoutScreenState extends State<SignoutScreen> {
   //widget for appbar
   _buildAppbar() {
     return AppBar(
-      title: Text('Signout Screen'),
+      title: Text('Signin Screen'),
     );
   }
 
@@ -42,12 +40,7 @@ class _SignoutScreenState extends State<SignoutScreen> {
       children: [
         //signin text
         Text('Signin Screen'),
-        //name textfield
-        TextFormField(
-          controller: _nameController,
-          decoration: UIConfig()
-              .inputDecoration('Enter Name', 'Name', Icons.person, null, null),
-        ),
+
         //email textfield
         TextFormField(
           controller: _emailController,
@@ -61,23 +54,13 @@ class _SignoutScreenState extends State<SignoutScreen> {
           decoration: UIConfig().inputDecoration('your Password', 'Password',
               Icons.lock, Icons.visibility, tooglePasstord),
         ),
-        //phone textfield
-        TextFormField(
-          controller: _phoneController,
-          decoration: UIConfig()
-              .inputDecoration('your phone', 'phone', Icons.phone, null, null),
-        ),
+
         //signin button
         CustomButton(
-          buttonText: "SIGNUP",
+          buttonText: "Signin",
           onPressed: () {
-            AuthenticationService().Signup(
-                _nameController.text,
-                _emailController.text,
-                _passwordController.text,
-                _passwordController.text,
-                _phoneController.text,
-                context); //get token
+            AuthenticationService().Login(_emailController.text,
+                _passwordController.text, context); //get token
           },
         ),
       ],

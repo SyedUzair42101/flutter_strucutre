@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:practice/screens/homescreen/homescreen.dart';
-import 'package:practice/screens/signin_screen/signin_screen.dart';
+import 'package:practice/services/http_services/http_services.dart';
+import 'package:provider/provider.dart';
+
+import 'screens/signin.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider<AuthenticationService>(
+      create: (context) => AuthenticationService(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
