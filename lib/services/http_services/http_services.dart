@@ -100,9 +100,6 @@ class AuthenticationService with ChangeNotifier {
     if (response.statusCode == 200) {
       var jsonList = json.decode(response.body);
       print(jsonList);
-      //var details = userprofilemodel.fromJson(jsonList);
-      //  print(details);
-      //  return details;
       return UserProfileModel.fromJson(jsonList);
     } else {
       throw Exception('Failed to logout');
@@ -123,7 +120,7 @@ class AuthenticationService with ChangeNotifier {
       var jsonList = json.decode(response.body);
       print(jsonList);
     } else {
-      throw Exception('Failed to load asma husna');
+      throw Exception('Failed to update');
     }
   }
 }
