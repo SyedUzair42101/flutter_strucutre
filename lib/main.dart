@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:practice/screens/google_maps/google_maps.dart';
+import 'package:practice/screens/bottom_button/bottom_button.dart';
 import 'package:practice/services/http_services/http_services.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: GoogleMaps(),
+      home: BottomButon(),
     );
   }
 }
